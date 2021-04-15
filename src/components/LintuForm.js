@@ -1,15 +1,26 @@
 import React from 'react'
 
-const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka, lisatiedot,
-    handleLajiChange, handleMaaraChange, handlePvmChange, handleKuntaChange, handlePaikkaChange, handleTiedotChange }) => {
+const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka,
+    lisatiedot, handleLajiChange, handleMaaraChange, handlePvmChange,
+    handleKuntaChange, handlePaikkaChange, handleTiedotChange }) => {
     return (
         <form onSubmit={addHavainto}>
             <div>
                 Laji: <input value={newLaji} onChange={handleLajiChange} />
+            </div>
+            <div>
                 Määrä: <input value={maara} onChange={handleMaaraChange} />
+            </div>
+            <div>
                 Päivämäärä: <input value={pvm} onChange={handlePvmChange} />
+            </div>
+            <div>
                 Kunta: <input value={kunta} onChange={handleKuntaChange} />
+            </div>
+            <div>
                 Paikka: <input value={paikka} onChange={handlePaikkaChange} />
+            </div>
+            <div>
                 Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
             </div>
         </form>
