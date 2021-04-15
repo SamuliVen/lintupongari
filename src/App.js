@@ -3,6 +3,7 @@ import { HashRouter, NavLink, Route } from 'react-router-dom'
 import LintuService from './services/LintuService'
 import LintuForm from './components/LintuForm'
 import Havainnot from './Havainnot'
+import Havainto from './components/Havainto'
 import Login from './components/Login'
 import Register from './components/Register'
 import Linnut from './Linnut'
@@ -26,9 +27,7 @@ const App = () => {
 
   const addHavainto = (event) => {
     event.preventDefault()
-
     const newHavainto = {
-      id: linnut.length + 1,
       laji: newLaji,
       maara: maara,
       pvm: new Date().toISOString(),
@@ -36,16 +35,17 @@ const App = () => {
       paikka: paikka,
       lisatiedot: lisatiedot
     }
-    setLinnut(linnut.concat(newHavainto))
 
     LintuService
       .create(newHavainto)
       .then(returnedLintu => {
         setLinnut(linnut.concat(returnedLintu))
+        setNewLaji('')
+        setMaara('')
+        setKunta('')
+        setPaikka('')
+        setLisatiedot('')
       })
-
-    setNewLaji('')
-
   }
 
   const handleLajiChange = (event) => {

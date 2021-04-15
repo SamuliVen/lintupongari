@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import lintuhavaintodb from './lintuhavaintodb.json'
 
 class Havainnot extends Component {
     render() {
@@ -12,7 +11,7 @@ class Havainnot extends Component {
                             <div key={i}>
                                 <div className="havainto">
                                     <h3>Laji: {havainto.laji}</h3>
-                                    <p> Määrä: {havainto.määrä}</p>
+                                    <p> Määrä: {havainto.maara}</p>
                                     <p>Päivämäärä:{havainto.pvm} <br></br>
                                 Paikkakunta: {havainto.kunta} <br></br>
                                 Paikka: {havainto.paikka}</p>

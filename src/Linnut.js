@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import lintuhavaintodb from './lintuhavaintodb.json'
+import lintuhavaintodb from './lintupongari/lintuhavaintodb.json'
 
 class Linnut extends Component {
     render() {
