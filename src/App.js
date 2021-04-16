@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { HashRouter, NavLink, Route } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route } from 'react-router-dom'
 import LintuService from './services/LintuService'
 import LintuForm from './components/LintuForm'
 import Havainnot from './Havainnot'
-import Havainto from './components/Havainto'
 import Login from './components/Login'
 import Register from './components/Register'
 import Linnut from './Linnut'
@@ -11,69 +10,126 @@ import "./index.css"
 
 
 const App = () => {
-  const [linnut, setLinnut] = useState([])
-  const [newLaji, setNewLaji] = useState("")
+  const [havaintoList, setHavaintoList] = useState([])
+  const [lintuList, setLintuList] = useState([])
+  const [laji, setLaji] = useState()
   const [maara, setMaara] = useState()
   const [kunta, setKunta] = useState()
   const [paikka, setPaikka] = useState()
   const [lisatiedot, setLisatiedot] = useState()
+  const [pvm, setPvm] = useState()
 
   useEffect(() => {
     LintuService
-      .getAll().then(initialLinnut => {
-        setLinnut(initialLinnut)
+      .getHavainto().then(initialHavainnot => {
+        setHavaintoList(initialHavainnot)
       })
+  }, [])
+  
+  useEffect(() => {
+    LintuService
+    .getLintu().then(initialLinnut => {
+      setLintuList(initialLinnut)
+    }) 
   }, [])
 
   const addHavainto = (event) => {
     event.preventDefault()
-    const newHavainto = {
-      laji: newLaji,
+    const newObject = {
+      laji: laji,
       maara: maara,
-      pvm: new Date().toISOString(),
       kunta: kunta,
       paikka: paikka,
       lisatiedot: lisatiedot
     }
 
     LintuService
-      .create(newHavainto)
+      .createHavainto(newObject)
       .then(returnedLintu => {
-        setLinnut(linnut.concat(returnedLintu))
-        setNewLaji('')
+        setHavaintoList(havaintoList.concat(returnedLintu))
+        setLaji('')
         setMaara('')
         setKunta('')
         setPaikka('')
         setLisatiedot('')
+        setPvm('')
       })
   }
 
-  const handleLajiChange = (event) => {
-    console.log(event.target.value)
-    setNewLaji(event.target.value)
+  const deleteHavainto = havainto => {
+    if (window.confirm("Poista " + havainto.laji + "?")) {
+
+      LintuService
+        .removeHavainto(havainto.id)
+        .then(removedHavainto => {
+          setHavaintoList(havaintoList.filter(bird => bird.id !== havainto.id))
+        })
+    }
   }
 
 
-  return (
 
-    <Havainnot linnut={linnut}/>
-    // <HashRouter>
-    //   <div>
-    //     <h1>Lintupongari</h1>
-    //     <ul className="Links">
-    //       <li><NavLink exact to="/login">Login</NavLink></li>
-    //       <li><NavLink to="/register">Register</NavLink></li>
-    //       <li><NavLink to="/havainnot">Havainnot</NavLink></li>
-    //       <li><NavLink to="/linnut">Linnut</NavLink></li>
-    //     </ul>
-    //     <div className="content">
-    //       <Route exact path="/login" component={Login} />
-    //       <Route path="/register" component={Register} />
-    //       <Route path="/havainnot" component={Havainnot} />
-    //       <Route path="/linnut" component={Linnut} />
-    //     </div>
-    //   </div>
-    // </HashRouter>
+  const handleLajiChange = (event) => {
+    setLaji(event.target.value)
+  }
+
+  const handleMaaraChange = (event) => {
+    setMaara(event.target.value)
+  }
+
+  const handleKuntaChange = (event) => {
+    setKunta(event.target.value)
+  }
+
+  const handlePaikkaChange = (event) => {
+    setPaikka(event.target.value)
+  }
+
+  const handlePvmChange = (event) => {
+    setPvm(event.target.value)
+  }
+
+  const handleTiedotChange = (event) => {
+    setLisatiedot(event.target.value)
+  }
+
+  return (
+    <div>
+      <div>
+        <BrowserRouter>
+          <div>
+            <h1>Lintupongari</h1>
+            <ul className="Links">
+              <li><NavLink exact to="/login">Login</NavLink></li>
+              <li><NavLink to="/register">Register</NavLink></li>
+              <li><NavLink to="/havainnot">Havainnot</NavLink></li>
+              <li><NavLink to="/linnut">Linnut</NavLink></li>
+            </ul>
+            <div className="content">
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/havainnot">
+                <Havainnot havaintoList={havaintoList}
+                  deleteHavainto={deleteHavainto} />
+              </Route>
+              <Route path="/linnut">
+                <Linnut lintuList={lintuList} />
+              </Route>
+            </div>
+          </div>
+        </BrowserRouter>
+      </div>
+      <div>
+        <h4>Lisää uusi havainto:</h4>
+        <LintuForm addHavainto={addHavainto} newLaji={laji} maara={maara} pvm={pvm} kunta={kunta} paikka={paikka}
+          lisatiedot={lisatiedot} handleLajiChange={handleLajiChange} handleMaaraChange={handleMaaraChange} handlePvmChange={handlePvmChange}
+          handleKuntaChange={handleKuntaChange} handlePaikkaChange={handlePaikkaChange} handleTiedotChange={handleTiedotChange} />
+      </div>
+    </div>
   )
 }
 

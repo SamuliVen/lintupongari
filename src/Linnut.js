@@ -1,11 +1,10 @@
 import React from 'react';
 
-const Linnut = ({ linnut }) => {
+const Linnut = ({ lintuList }) => {
     return (
         <div>
             <h2> Lintutaulu </h2>
-            {
-                linnut.lintu.map((lintu, i) => {
+            {lintuList.map((lintu, i) => {
                     return (
                         <div key={i}>
                             <div className="lintu">

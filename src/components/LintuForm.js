@@ -4,7 +4,7 @@ const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka,
     lisatiedot, handleLajiChange, handleMaaraChange, handlePvmChange,
     handleKuntaChange, handlePaikkaChange, handleTiedotChange }) => {
     return (
-        <form onSubmit={addHavainto}>
+        <form onSubmit={addHavainto} className="lintuform">
             <div>
                 Laji: <input value={newLaji} onChange={handleLajiChange} />
             </div>
@@ -23,6 +23,8 @@ const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka,
             <div>
                 Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
             </div>
+            <button type="submit">Tallenna</button>
+            <button type="reset">Tyhjennä</button>
         </form>
     )
 }
