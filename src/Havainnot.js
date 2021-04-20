@@ -11,8 +11,7 @@ const Havainnot = ({ havaintoList, deleteHavainto }) => {
                         <li>
                             <h3>Laji: {havainto.laji}</h3>
                             <p> Määrä: {havainto.maara}</p>
-                            <p>Päivämäärä:{havainto.pvm} <br></br>
-                                Paikkakunta: {havainto.kunta} <br></br>
+                            <p> Paikkakunta: {havainto.kunta} <br></br>
                                 Paikka: {havainto.paikka}<br></br>
                                 Lisätiedot: {havainto.lisatiedot}</p>
                             <p>Havainnoija: {havainto.havainnoija}</p>

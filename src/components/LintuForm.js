@@ -1,8 +1,8 @@
 import React from 'react'
 
 const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka,
-    lisatiedot, handleLajiChange, handleMaaraChange, handlePvmChange,
-    handleKuntaChange, handlePaikkaChange, handleTiedotChange }) => {
+    lisatiedot, havainnoija, handleLajiChange, handleMaaraChange, handlePvmChange,
+    handleKuntaChange, handlePaikkaChange, handleTiedotChange, handleHavainnojaChange }) => {
     return (
         <form onSubmit={addHavainto} className="lintuform">
             <div>
@@ -22,6 +22,9 @@ const LintuForm = ({ addHavainto, newLaji, maara, pvm, kunta, paikka,
             </div>
             <div>
                 Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
+            </div>
+            <div>
+                Havainnoija: <input value={havainnoija} onChange={handleHavainnojaChange} />
             </div>
             <button type="submit">Tallenna</button>
             <button type="reset">Tyhjennä</button>

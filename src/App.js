@@ -18,6 +18,7 @@ const App = () => {
   const [paikka, setPaikka] = useState()
   const [lisatiedot, setLisatiedot] = useState()
   const [pvm, setPvm] = useState()
+  const [havainnoija, setHavainnoija] = useState()
 
   useEffect(() => {
     LintuService
@@ -40,7 +41,8 @@ const App = () => {
       maara: maara,
       kunta: kunta,
       paikka: paikka,
-      lisatiedot: lisatiedot
+      lisatiedot: lisatiedot,
+      havainnoija: havainnoija
     }
 
     LintuService
@@ -53,6 +55,7 @@ const App = () => {
         setPaikka('')
         setLisatiedot('')
         setPvm('')
+        setHavainnoija('')
       })
   }
 
@@ -66,8 +69,6 @@ const App = () => {
         })
     }
   }
-
-
 
   const handleLajiChange = (event) => {
     setLaji(event.target.value)
@@ -91,6 +92,10 @@ const App = () => {
 
   const handleTiedotChange = (event) => {
     setLisatiedot(event.target.value)
+  }
+
+  const handleHavainnoijaChange = (event) => {
+    setHavainnoija(event.target.value)
   }
 
   return (
@@ -126,8 +131,8 @@ const App = () => {
       <div>
         <h4>Lisää uusi havainto:</h4>
         <LintuForm addHavainto={addHavainto} newLaji={laji} maara={maara} pvm={pvm} kunta={kunta} paikka={paikka}
-          lisatiedot={lisatiedot} handleLajiChange={handleLajiChange} handleMaaraChange={handleMaaraChange} handlePvmChange={handlePvmChange}
-          handleKuntaChange={handleKuntaChange} handlePaikkaChange={handlePaikkaChange} handleTiedotChange={handleTiedotChange} />
+          lisatiedot={lisatiedot} havainnoija={havainnoija} handleLajiChange={handleLajiChange} handleMaaraChange={handleMaaraChange} handlePvmChange={handlePvmChange}
+          handleKuntaChange={handleKuntaChange} handlePaikkaChange={handlePaikkaChange} handleTiedotChange={handleTiedotChange} handleHavainnojaChange={handleHavainnoijaChange} />
       </div>
     </div>
   )
