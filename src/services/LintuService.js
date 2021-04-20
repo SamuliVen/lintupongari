@@ -1,8 +1,8 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/lintudb/'
-const havaintoUrl = 'http://localhost:3001/api/lintudb/havainto'
-const lintuUrl = 'http://localhost:3001/api/lintudb/lintu'
-const userUrl = 'http://localhost:3001/api/lintudb/user'
+const baseUrl = '/api/lintudb/'
+const havaintoUrl = '/api/lintudb/havainto'
+const lintuUrl = '/api/lintudb/lintu'
+const userUrl = '/api/lintudb/user'
 
 const getAll = () => {
     const request = axios.get(baseUrl)

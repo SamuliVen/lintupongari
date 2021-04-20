@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -40,5 +41,6 @@
   },
   "devDependencies": {
     "json-server": "^0.16.3"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
