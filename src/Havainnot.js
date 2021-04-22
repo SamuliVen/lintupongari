@@ -14,7 +14,7 @@ const Havainnot = ({ havaintoList, deleteHavainto }) => {
                             <p> Paikkakunta: {havainto.kunta} <br></br>
                                 Paikka: {havainto.paikka}<br></br>
                                 Lisätiedot: {havainto.lisatiedot}</p>
-                            <p>Havainnoija: {havainto.havainnoija}</p>
+                            <p>Havainnoija: </p>
 
                             <button className="btn">Muokkaa havaintoa</button>
                             <button className="btn" onClick={() =>
