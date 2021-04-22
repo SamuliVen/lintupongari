@@ -70,6 +70,8 @@ const App = () => {
     }
   }
 
+  // const updateHavainto = ???
+
   const handleLajiChange = (event) => {
     setLaji(event.target.value)
   }
