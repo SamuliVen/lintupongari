@@ -157,7 +157,7 @@ const App = () => {
       });
 
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedLintupongariUser', JSON.stringify(user)
       )
 
       LintuService.setToken(user.token)
@@ -171,8 +171,8 @@ const App = () => {
 
   const handleLogout = async (event) => {
     event.preventDefault();
-    window.localStorage.removeItem('loggedNoteappUser')
-    LintuService.setToken(null)
+    window.localStorage.removeItem('loggedLintupongariUser')
+    setUser(null)
   }
 
   return (
