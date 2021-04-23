@@ -169,6 +169,12 @@ const App = () => {
     }
   };
 
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    window.localStorage.removeItem('loggedNoteappUser')
+    LintuService.setToken(null)
+  }
+
   return (
     <div>
       <div>
@@ -191,7 +197,8 @@ const App = () => {
                 loginForm()
               ) : (
                 <div>
-                  <p>{user.name} logged in</p>
+                  <p>{user.username} logged in 
+                  <button onClick={handleLogout}>logout</button> </p>
                   {lintuForm()}
                 </div>
               )}
