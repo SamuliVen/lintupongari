@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, NavLink, Route } from "react-router-dom";
 import LintuService from "./services/LintuService";
-import Havainnot from "./Havainnot";
+import Havainto from "./components/Havainto";
 import loginService from "./services/login";
 import Register from "./components/Register";
 import Togglable from "./components/Togglable";
@@ -11,14 +11,21 @@ import "./index.css";
 const App = () => {
   const [havaintoList, setHavaintoList] = useState([]);
   const [lintuList, setLintuList] = useState([]);
-  const [laji, setLaji] = useState();
-  const [maara, setMaara] = useState();
-  const [kunta, setKunta] = useState();
-  const [paikka, setPaikka] = useState();
-  const [lisatiedot, setLisatiedot] = useState();
+  const [userList, setUserList] = useState([]);
+  const [laji, setLaji] = useState("");
+  const [maara, setMaara] = useState("");
+  const [kunta, setKunta] = useState("");
+  const [paikka, setPaikka] = useState("");
+  const [lisatiedot, setLisatiedot] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [changedmaara, setChangedMaara] = useState("");
+  const [changedkunta, setChangedKunta] = useState("");
+  const [changedpaikka, setChangedPaikka] = useState("");
+  const [changedlisatiedot, setChangedLisatiedot] = useState("");
+
+  const havaintoFromRef = useRef()
 
   useEffect(() => {
     LintuService.getHavainto().then((initialHavainnot) => {
@@ -33,13 +40,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem("loggedNoteappUser");
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      LintuService.setToken(user.token)
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      LintuService.setToken(user.token);
     }
-  }, [])
+  }, []);
 
   const addHavainto = (event) => {
     event.preventDefault();
@@ -49,7 +56,7 @@ const App = () => {
       kunta: kunta,
       paikka: paikka,
       lisatiedot: lisatiedot,
-      user: user.username
+      user: user.username,
     };
 
     LintuService.createHavainto(newObject).then((returnedLintu) => {
@@ -70,53 +77,79 @@ const App = () => {
     }
   };
 
-  const changeHavainto = (event) => {
-    event.preventDefault();
-    const updatedHavainto = {
-      maara: changedMaara,
-      kunta: changedKunta,
-      paikka: changedPaikka,
-      lisatiedot: changedLisatiedot,
-    }
-  }
+  // const changeHavainto = (havainto) => {
+  //   if (window.confirm("Päivitä " + havainto.laji + "?")) {
 
-  const updateHavainto = (havainto) => {
-    const oldHavainto = havaintoList.find(h => h === havainto)
-    const willUpdate = window.confirm(`Päivitä ${havainto.laji}`)
-    if (willUpdate) {
+  //     const oldHavainto = havaintoList.find(h => h === havainto)
+
+  //     const updatedHavainto = {
+  //       ...oldHavainto,
+  //       maara: changedmaara,
+  //       kunta: changedkunta,
+  //       paikka: changedpaikka,
+  //       lisatiedot: changedlisatiedot,
+  //     }
+
+  //     const id = oldHavainto.id
+  //     LintuService
+  //       .updateHavainto(id, updatedHavainto)
+  //       .then((returnedHavainto) => {
+  //         setHavaintoList(havaintoList.map((h) => (h.id !== id ? h : returnedHavainto)))
+  //         setChangedMaara("");
+  //         setChangedKunta("");
+  //         setChangedPaikka("");
+  //         setChangedLisatiedot("");
+  //       })
+  //   }
+  // }
+
+  const changeHavainto = (id) => {
+
+    
+
+    const oldHavainto = havaintoList.find((h) => h.id === id);
+    console.log(oldHavainto.laji);
+    if (window.confirm("Päivitä " + oldHavainto.laji + "?")) {
+      
+
       const updatedHavainto = {
-        ...oldHavainto, maara: changedMaara,
-        kunta: changedKunta, paikka: changedPaikka, lisatiedot: changedLisatiedot
-      }
-      const id = havainto.id
-      return LintuService.updateHavainto(id, updatedHavainto).then((returnedHavainto) => {
-        setHavaintoList(havaintoList.map((h) => (h.id !== id ? h : returnedHavainto)))
-        setLaji("");
-        setMaara("");
-        setKunta("");
-        setPaikka("");
-        setLisatiedot("");
-      })
+        ...oldHavainto,
+        maara: changedmaara,
+        kunta: changedkunta,
+        paikka: changedpaikka,
+        lisatiedot: changedlisatiedot,
+      };
 
+      LintuService.updateHavainto(id, updatedHavainto).then(
+        (returnedHavainto) => {
+          setHavaintoList(
+            havaintoList.map((h) => (h.id !== id ? h : returnedHavainto))
+          );
+          setChangedMaara("");
+          setChangedKunta("");
+          setChangedPaikka("");
+          setChangedLisatiedot("");
+        }
+      );
     }
-
-
-
-  }
+  };
 
   const printHavainto = (havainto) => {
     // let printContent = document.getElementById(havainto).innerHTML
     // let originalContent = document.body.innerHTML
     // document.body.innerHTML = printContent
-    window.print()
+    window.print();
     // document.body.innerHTML = originalContent
-  }
+  };
+
+  
+
   const loginForm = () => (
     <Togglable buttonLabel="Log in">
       <form onSubmit={handleLogin}>
         <div>
           username
-        <input
+          <input
             type="text"
             value={username}
             name="Username"
@@ -125,14 +158,16 @@ const App = () => {
         </div>
         <div>
           password
-        <input
+          <input
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button className="btn" type="submit">
+          Login
+        </button>
       </form>
     </Togglable>
   );
@@ -155,7 +190,8 @@ const App = () => {
             Paikka: <input value={paikka} onChange={handlePaikkaChange} />
           </div>
           <div>
-            Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
+            Lisätiedot:{" "}
+            <input value={lisatiedot} onChange={handleTiedotChange} />
           </div>
           <button type="submit">Tallenna</button>
           <button type="reset">Tyhjennä</button>
@@ -164,27 +200,40 @@ const App = () => {
     </Togglable>
   );
 
-  const updateForm = () => (
+  const updateForm = (id) => (
+    <Togglable buttonLabel="Muokkaa HAVAINTOA" ref={havaintoFromRef}>
       <div>
         <h4>Päivitä havainto</h4>
-        <form onSubmit={changeHavainto} className="changeForm">
+        <form onSubmit={changeHavainto(id)} className="changeForm">
           <div>
-            Määrä: <input value={maara} onChange={handleMaaraChange} />
+            Määrä:
+            <input value={changedmaara} onChange={handleUpdateMaaraChange} />
           </div>
           <div>
-            Kunta: <input value={kunta} onChange={handleKuntaChange} />
+            Kunta:
+            <input value={changedkunta} onChange={handleUpdateKuntaChange} />
           </div>
           <div>
-            Paikka: <input value={paikka} onChange={handlePaikkaChange} />
+            Paikka:
+            <input value={changedpaikka} onChange={handleUpdatePaikkaChange} />
           </div>
           <div>
-            Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
+            Lisätiedot:
+            <input
+              value={changedlisatiedot}
+              onChange={handleUpdateTiedotChange}
+            />
           </div>
-          <button type="submit">Tallenna</button>
-          <button type="reset">Tyhjennä</button>
+          <button type="submit" className="btn">
+            Tallenna
+          </button>
+          <button type="reset" className="btn">
+            Tyhjennä
+          </button>
         </form>
       </div>
-  )
+    </Togglable>
+  );
 
   const handleLajiChange = (event) => {
     setLaji(event.target.value);
@@ -206,6 +255,22 @@ const App = () => {
     setLisatiedot(event.target.value);
   };
 
+  const handleUpdateMaaraChange = (event) => {
+    setChangedMaara(event.target.value);
+  };
+
+  const handleUpdateKuntaChange = (event) => {
+    setChangedKunta(event.target.value);
+  };
+
+  const handleUpdatePaikkaChange = (event) => {
+    setChangedPaikka(event.target.value);
+  };
+
+  const handleUpdateTiedotChange = (event) => {
+    setChangedLisatiedot(event.target.value);
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -215,10 +280,11 @@ const App = () => {
       });
 
       window.localStorage.setItem(
-        'loggedLintupongariUser', JSON.stringify(user)
-      )
+        "loggedLintupongariUser",
+        JSON.stringify(user)
+      );
 
-      LintuService.setToken(user.token)
+      LintuService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
@@ -229,9 +295,9 @@ const App = () => {
 
   const handleLogout = async (event) => {
     event.preventDefault();
-    window.localStorage.removeItem('loggedLintupongariUser')
-    setUser(null)
-  }
+    window.localStorage.removeItem("loggedLintupongariUser");
+    setUser(null);
+  };
 
   return (
     <div>
@@ -255,8 +321,12 @@ const App = () => {
                 loginForm()
               ) : (
                 <div>
-                  <p>{user.username} logged in
-                  <button onClick={handleLogout}>logout</button> </p>
+                  <p>
+                    {user.username} logged in
+                    <button className="btn" onClick={handleLogout}>
+                      Log out
+                    </button>{" "}
+                  </p>
                   {lintuForm()}
                 </div>
               )}
@@ -265,10 +335,12 @@ const App = () => {
                 <Register />
               </Route>
               <Route path="/havainnot">
-                <Havainnot
+                <Havainto
                   havaintoList={havaintoList}
                   deleteHavainto={deleteHavainto}
-                  updateHavainto={updateHavainto}
+                  updateForm={updateForm}
+                  
+                  // changeHavainto={changeHavainto}
                   printHavainto={printHavainto}
                 />
               </Route>
