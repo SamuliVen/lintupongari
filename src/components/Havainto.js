@@ -14,7 +14,7 @@ const Havainto = ({ havaintoList, deleteHavainto, printHavainto, updateForm, cha
                             <p> Paikkakunta: {havainto.kunta} <br></br>
                                 Paikka: {havainto.paikka}<br></br>
                                 Lisätiedot: {havainto.lisatiedot}</p>
-                            <p>Havainnoija:</p>
+                            <p>Havainnoija: </p>
                             <button className="btn" onClick={() => 
                             updateForm(havainto.id)}>Muokkaa havaintoa</button>
                             {/* <button className="btn" onClick={() =>

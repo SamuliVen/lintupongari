@@ -3,7 +3,6 @@ import { BrowserRouter, NavLink, Route } from "react-router-dom";
 import LintuService from "./services/LintuService";
 import Havainto from "./components/Havainto";
 import loginService from "./services/login";
-import Register from "./components/Register";
 import Togglable from "./components/Togglable";
 import Linnut from "./Linnut";
 import "./index.css";
@@ -19,13 +18,15 @@ const App = () => {
   const [lisatiedot, setLisatiedot] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [user, setUser] = useState(null);
   const [changedmaara, setChangedMaara] = useState("");
   const [changedkunta, setChangedKunta] = useState("");
   const [changedpaikka, setChangedPaikka] = useState("");
   const [changedlisatiedot, setChangedLisatiedot] = useState("");
 
-  const havaintoFromRef = useRef()
+  const havaintoFromRef = useRef();
 
   useEffect(() => {
     LintuService.getHavainto().then((initialHavainnot) => {
@@ -40,7 +41,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedNoteappUser");
+    LintuService.getUser().then((initialUsers) => {
+      setUserList(initialUsers);
+    });
+  }, []);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedLintupongariUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
@@ -59,8 +66,24 @@ const App = () => {
       user: user.username,
     };
 
-    LintuService.createHavainto(newObject).then((returnedLintu) => {
-      setHavaintoList(havaintoList.concat(returnedLintu));
+    if (lintuList.some((lintu) => lintu.laji !== laji)) {
+      const newWiki = {
+        laji: laji,
+        tieteellinenNimi: "",
+        kuvaWikipediastaAPI: "",
+        lahko: "",
+        heimo: "",
+        suku: "",
+        elinvoimaisuus: "",
+      };
+      LintuService.createLintu(newWiki).then(returnedLintu => {
+        setLintuList(lintuList.concat(returnedLintu));
+      });
+      
+    }
+
+    LintuService.createHavainto(newObject).then((returnedHavainto) => {
+      setHavaintoList(havaintoList.concat(returnedHavainto));
       setLaji("");
       setMaara("");
       setKunta("");
@@ -104,14 +127,9 @@ const App = () => {
   // }
 
   const changeHavainto = (id) => {
-
-    
-
     const oldHavainto = havaintoList.find((h) => h.id === id);
     console.log(oldHavainto.laji);
     if (window.confirm("Päivitä " + oldHavainto.laji + "?")) {
-      
-
       const updatedHavainto = {
         ...oldHavainto,
         maara: changedmaara,
@@ -142,7 +160,34 @@ const App = () => {
     // document.body.innerHTML = originalContent
   };
 
-  
+  const registerForm = () => (
+    <Togglable buttonLabel="Register">
+      <div className="Login-laatikko">
+        <h2>Rekisteröidy</h2>
+        <form onSubmit={handleNewUser}>
+          <label>
+            <p>Username</p>
+            <input
+              type="text"
+              value={newUsername}
+              onChange={handleNewUsernameChange}
+            />
+          </label>
+          <label>
+            <p>Password</p>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={handleNewPasswordChange}
+            />
+          </label>
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </Togglable>
+  );
 
   const loginForm = () => (
     <Togglable buttonLabel="Log in">
@@ -271,6 +316,14 @@ const App = () => {
     setChangedLisatiedot(event.target.value);
   };
 
+  const handleNewUsernameChange = (event) => {
+    setNewUsername(event.target.value);
+  };
+
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -299,6 +352,23 @@ const App = () => {
     setUser(null);
   };
 
+  const handleNewUser = (event) => {
+    event.preventDefault();
+    const newUser = {
+      username: newUsername,
+      password: newPassword,
+    };
+    LintuService
+    .createUser(newUser)
+    .then(returnedUser => {
+      setUserList(userList.concat(returnedUser));
+    });
+    
+    window.alert("Tervetuloa " + newUsername);
+    setNewUsername("");
+    setNewPassword("");
+  };
+
   return (
     <div>
       <div>
@@ -306,9 +376,6 @@ const App = () => {
           <div>
             <h1>Lintupongari</h1>
             <ul className="Links">
-              <li>
-                <NavLink to="/register">Register</NavLink>
-              </li>
               <li>
                 <NavLink to="/havainnot">Havainnot</NavLink>
               </li>
@@ -330,16 +397,12 @@ const App = () => {
                   {lintuForm()}
                 </div>
               )}
-
-              <Route path="/register">
-                <Register />
-              </Route>
+              <div>{user === null ? registerForm() : <div></div>}</div>
               <Route path="/havainnot">
                 <Havainto
                   havaintoList={havaintoList}
                   deleteHavainto={deleteHavainto}
                   updateForm={updateForm}
-                  
                   // changeHavainto={changeHavainto}
                   printHavainto={printHavainto}
                 />

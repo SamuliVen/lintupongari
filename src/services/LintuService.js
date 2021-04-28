@@ -3,6 +3,7 @@ const baseUrl = '/api/lintudb/'
 const havaintoUrl = '/api/lintudb/havainto'
 const lintuUrl = '/api/lintudb/lintu'
 const userUrl = '/api/lintudb/user'
+const wikiUrl = '/api/wiki'
 
 let token = null
 
@@ -30,11 +31,21 @@ const getUser = () => {
     return request.then(response => response.data)
 }
 
+const createUser = async newObject => {
+    const response = await axios.post(userUrl, newObject)
+    return response.data
+}
+
 const createHavainto = async newObject => {
     const config = {
         headers: { Authorization: token },
       }
     const response = await axios.post(havaintoUrl, newObject, config)
+    return response.data
+}
+
+const createLintu = async newObject => {
+    const response = await axios.post(lintuUrl, newObject)
     return response.data
 }
 
@@ -49,4 +60,4 @@ const removeHavainto = (id) => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, getHavainto, getLintu, getUser, createHavainto, updateHavainto, removeHavainto, setToken }
+export default { getAll, getHavainto, getLintu, getUser, createUser, createHavainto, createLintu, updateHavainto, removeHavainto, setToken }
