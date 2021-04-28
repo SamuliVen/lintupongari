@@ -25,6 +25,8 @@ const App = () => {
   const [changedkunta, setChangedKunta] = useState("");
   const [changedpaikka, setChangedPaikka] = useState("");
   const [changedlisatiedot, setChangedLisatiedot] = useState("");
+  const [wikidata, setWikidata] = useState("");
+  const [haku, setHaku] = useState("");
 
   const havaintoFromRef = useRef();
 
@@ -47,13 +49,21 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedLintupongariUser");
+    const loggedUserJSON = window.localStorage.getItem(
+      "loggedLintupongariUser"
+    );
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       LintuService.setToken(user.token);
     }
   }, []);
+
+  useEffect(() => {
+    LintuService.getWikiHaku(haku).then((initialData) => {
+      setWikidata(initialData);
+    });
+  }, [haku]);
 
   const addHavainto = (event) => {
     event.preventDefault();
@@ -67,19 +77,22 @@ const App = () => {
     };
 
     if (lintuList.some((lintu) => lintu.laji !== laji)) {
+      setHaku(laji)
+      console.log(wikidata);
       const newWiki = {
         laji: laji,
         tieteellinenNimi: "",
-        kuvaWikipediastaAPI: "",
+        kuvaWikipediastaAPI: wikidata?.[0]?.thumbnail?.source,
         lahko: "",
         heimo: "",
         suku: "",
         elinvoimaisuus: "",
       };
-      LintuService.createLintu(newWiki).then(returnedLintu => {
+      LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
+        setHaku("")
+        setWikidata("")
       });
-      
     }
 
     LintuService.createHavainto(newObject).then((returnedHavainto) => {
@@ -358,12 +371,10 @@ const App = () => {
       username: newUsername,
       password: newPassword,
     };
-    LintuService
-    .createUser(newUser)
-    .then(returnedUser => {
+    LintuService.createUser(newUser).then((returnedUser) => {
       setUserList(userList.concat(returnedUser));
     });
-    
+
     window.alert("Tervetuloa " + newUsername);
     setNewUsername("");
     setNewPassword("");
