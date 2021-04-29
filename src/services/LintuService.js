@@ -3,8 +3,8 @@ const baseUrl = "/api/lintudb/";
 const havaintoUrl = "/api/lintudb/havainto";
 const lintuUrl = "/api/lintudb/lintu";
 const userUrl = "/api/lintudb/user";
-const wikiUrl = "https://fi.wikipedia.org/w/api.php?action=query&titles=";
-const formatter = "&format=json&formatversion=2&prop=extracts|pageimages&exintro&explaintext&exsentences=4";
+const wikiUrl = "/api/wiki?haku=";
+
 
 let token = null;
 
@@ -13,7 +13,7 @@ const setToken = (newToken) => {
 };
 
 const getWikiHaku = (haku) => {
-    const request = axios.get(wikiUrl + haku + formatter)
+    const request = axios.get(wikiUrl + haku)
     return request.then((response) => response.data)
 }
 

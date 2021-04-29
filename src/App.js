@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, NavLink, Route } from "react-router-dom";
 import LintuService from "./services/LintuService";
 import Havainto from "./components/Havainto";
@@ -25,10 +25,7 @@ const App = () => {
   const [changedkunta, setChangedKunta] = useState("");
   const [changedpaikka, setChangedPaikka] = useState("");
   const [changedlisatiedot, setChangedLisatiedot] = useState("");
-  const [wikidata, setWikidata] = useState("");
-  const [haku, setHaku] = useState("");
-
-  const havaintoFromRef = useRef();
+  const [wikiData, setWikiData] = useState("");
 
   useEffect(() => {
     LintuService.getHavainto().then((initialHavainnot) => {
@@ -59,12 +56,6 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    LintuService.getWikiHaku(haku).then((initialData) => {
-      setWikidata(initialData);
-    });
-  }, [haku]);
-
   const addHavainto = (event) => {
     event.preventDefault();
     const newObject = {
@@ -76,13 +67,26 @@ const App = () => {
       user: user.username,
     };
 
-    if (lintuList.some((lintu) => lintu.laji !== laji)) {
-      setHaku(laji)
-      console.log(wikidata);
+    if (lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())) {
+      window.alert(laji + " on jo lintutaulussa.");
+    } else {
+      console.log(lintuList);
+      console.log(laji)
+
+      LintuService.getWikiHaku(laji)
+        .then((returnedData) => {
+          setWikiData(returnedData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        console.log(wikiData)
+
       const newWiki = {
         laji: laji,
-        tieteellinenNimi: "",
-        kuvaWikipediastaAPI: wikidata?.[0]?.thumbnail?.source,
+        tieteellinenNimi: wikiData?.[0].title,
+        kuvaWikipediastaAPI: wikiData?.[0]?.thumbnail?.source,
         lahko: "",
         heimo: "",
         suku: "",
@@ -90,8 +94,7 @@ const App = () => {
       };
       LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
-        setHaku("")
-        setWikidata("")
+        setWikiData("");
       });
     }
 
@@ -259,7 +262,7 @@ const App = () => {
   );
 
   const updateForm = (id) => (
-    <Togglable buttonLabel="Muokkaa HAVAINTOA" ref={havaintoFromRef}>
+    <Togglable buttonLabel="Muokkaa HAVAINTOA">
       <div>
         <h4>Päivitä havainto</h4>
         <form onSubmit={changeHavainto(id)} className="changeForm">
