@@ -12,9 +12,9 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getWikiHaku = (haku) => {
-    const request = axios.get(wikiUrl + haku)
-    return request.then((response) => response.data)
+const getWikiHaku = async (haku) => {
+  const response = await axios.get(wikiUrl + haku)
+  return response.data
 }
 
 const getAll = () => {

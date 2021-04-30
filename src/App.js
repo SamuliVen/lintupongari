@@ -25,7 +25,7 @@ const App = () => {
   const [changedkunta, setChangedKunta] = useState("");
   const [changedpaikka, setChangedPaikka] = useState("");
   const [changedlisatiedot, setChangedLisatiedot] = useState("");
-  const [wikiData, setWikiData] = useState("");
+  const [wikiData, setWikiData] = useState({});
 
   useEffect(() => {
     LintuService.getHavainto().then((initialHavainnot) => {
@@ -70,31 +70,37 @@ const App = () => {
     if (lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
-      console.log(lintuList);
-      console.log(laji)
+      console.log(wikiData);
 
+      console.log(laji);
+
+      //getWikiHaku -> Suoritus jatkuu vasta kun funktio on valmis?
       LintuService.getWikiHaku(laji)
         .then((returnedData) => {
           setWikiData(returnedData);
+          console.log(returnedData);
+          setTimeout(5000)
         })
         .catch((error) => {
           console.log(error);
         });
 
-        console.log(wikiData)
+      console.log(wikiData);
 
       const newWiki = {
         laji: laji,
-        tieteellinenNimi: wikiData?.[0].title,
-        kuvaWikipediastaAPI: wikiData?.[0]?.thumbnail?.source,
-        lahko: "",
-        heimo: "",
-        suku: "",
-        elinvoimaisuus: "",
+        tieteellinenNimi: wikiData?.[0]?.title, //Wiki API
+        kuvaWikipediastaAPI: wikiData?.[0]?.original?.source,
+        lahko: "", //Wiki API
+        heimo: "", //Wiki API
+        suku: "", //Wiki API
+        elinvoimaisuus: "", //Wiki API
       };
+
       LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
         setWikiData("");
+        console.log(lintuList);
       });
     }
 
