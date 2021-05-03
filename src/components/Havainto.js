@@ -35,10 +35,7 @@ const Havainto = ({
               <Togglable buttonLabel="Muokkaa HAVAINTOA">
                 <div>
                   <h4>Päivitä havainto</h4>
-                  <form
-                    onSubmit={changeHavainto(havainto.id)}
-                    className="changeForm"
-                  >
+                  <form className="changeForm">
                     <div>
                       Määrä:
                       <input
@@ -67,17 +64,21 @@ const Havainto = ({
                         onChange={handleUpdateTiedotChange}
                       />
                     </div>
-                    <button type="submit" className="btn">
+                    <button
+                      type="submit"
+                      className="btn"
+                      onClick={() => changeHavainto(havainto)}
+                    >
                       Tallenna
                     </button>
+
                     <button type="reset" className="btn">
                       Tyhjennä
                     </button>
                   </form>
                 </div>
               </Togglable>
-              {/* <button className="btn" onClick={() =>
-                                    changeHavainto(havainto)}>Muokkaa havainto</button> */}
+
               <button className="btn" onClick={() => deleteHavainto(havainto)}>
                 Poista havainto
               </button>
