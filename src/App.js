@@ -67,7 +67,9 @@ const App = () => {
       user: user.username,
     };
 
-    if (lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())) {
+    if (
+      lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())
+    ) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
       console.log(wikiData);
@@ -77,9 +79,9 @@ const App = () => {
       //getWikiHaku -> Suoritus jatkuu vasta kun funktio on valmis?
       LintuService.getWikiHaku(laji)
         .then((returnedData) => {
+          //Ylimääräinen ()!!
           setWikiData(returnedData);
           console.log(returnedData);
-          setTimeout(5000)
         })
         .catch((error) => {
           console.log(error);
@@ -122,36 +124,10 @@ const App = () => {
     }
   };
 
-  // const changeHavainto = (havainto) => {
-  //   if (window.confirm("Päivitä " + havainto.laji + "?")) {
-
-  //     const oldHavainto = havaintoList.find(h => h === havainto)
-
-  //     const updatedHavainto = {
-  //       ...oldHavainto,
-  //       maara: changedmaara,
-  //       kunta: changedkunta,
-  //       paikka: changedpaikka,
-  //       lisatiedot: changedlisatiedot,
-  //     }
-
-  //     const id = oldHavainto.id
-  //     LintuService
-  //       .updateHavainto(id, updatedHavainto)
-  //       .then((returnedHavainto) => {
-  //         setHavaintoList(havaintoList.map((h) => (h.id !== id ? h : returnedHavainto)))
-  //         setChangedMaara("");
-  //         setChangedKunta("");
-  //         setChangedPaikka("");
-  //         setChangedLisatiedot("");
-  //       })
-  //   }
-  // }
-
   const changeHavainto = (id) => {
     const oldHavainto = havaintoList.find((h) => h.id === id);
     console.log(oldHavainto.laji);
-    if (window.confirm("Päivitä " + oldHavainto.laji + "?")) {
+    
       const updatedHavainto = {
         ...oldHavainto,
         maara: changedmaara,
@@ -171,7 +147,7 @@ const App = () => {
           setChangedLisatiedot("");
         }
       );
-    }
+    
   };
 
   const printHavainto = (havainto) => {
@@ -262,41 +238,6 @@ const App = () => {
           </div>
           <button type="submit">Tallenna</button>
           <button type="reset">Tyhjennä</button>
-        </form>
-      </div>
-    </Togglable>
-  );
-
-  const updateForm = (id) => (
-    <Togglable buttonLabel="Muokkaa HAVAINTOA">
-      <div>
-        <h4>Päivitä havainto</h4>
-        <form onSubmit={changeHavainto(id)} className="changeForm">
-          <div>
-            Määrä:
-            <input value={changedmaara} onChange={handleUpdateMaaraChange} />
-          </div>
-          <div>
-            Kunta:
-            <input value={changedkunta} onChange={handleUpdateKuntaChange} />
-          </div>
-          <div>
-            Paikka:
-            <input value={changedpaikka} onChange={handleUpdatePaikkaChange} />
-          </div>
-          <div>
-            Lisätiedot:
-            <input
-              value={changedlisatiedot}
-              onChange={handleUpdateTiedotChange}
-            />
-          </div>
-          <button type="submit" className="btn">
-            Tallenna
-          </button>
-          <button type="reset" className="btn">
-            Tyhjennä
-          </button>
         </form>
       </div>
     </Togglable>
@@ -420,11 +361,18 @@ const App = () => {
               <div>{user === null ? registerForm() : <div></div>}</div>
               <Route path="/havainnot">
                 <Havainto
+                  changeHavainto={changeHavainto}
                   havaintoList={havaintoList}
                   deleteHavainto={deleteHavainto}
-                  updateForm={updateForm}
-                  // changeHavainto={changeHavainto}
                   printHavainto={printHavainto}
+                  changedmaara={changedmaara}
+                  handleUpdateMaaraChange={handleUpdateMaaraChange}
+                  changedkunta={changedkunta}
+                  handleUpdateKuntaChange={handleUpdateKuntaChange}
+                  changedpaikka={changedpaikka}
+                  handleUpdatePaikkaChange={handleUpdatePaikkaChange}
+                  changedlisatiedot={changedlisatiedot}
+                  handleUpdateTiedotChange={handleUpdateTiedotChange}
                 />
               </Route>
               <Route path="/linnut">
