@@ -56,6 +56,23 @@ const App = () => {
     }
   }, []);
 
+  // Whenever field changes, the useEffect makes the wiki search. This way it finds the info before submitting.
+  // Not the ideal way, because it is done many times depending on the length of the birds name.
+  
+  useEffect(() => {
+    if (!laji) {
+      console.log("No data yet");
+    } else {
+      LintuService.getWikiHaku(laji)
+        .then((returnedData) => {
+          setWikiData(returnedData);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [laji]);
+
   const addHavainto = (event) => {
     event.preventDefault();
     const newObject = {
@@ -72,31 +89,15 @@ const App = () => {
     ) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
-      console.log(wikiData);
-
-      console.log(laji);
-
-      //getWikiHaku -> Suoritus jatkuu vasta kun funktio on valmis?
-      LintuService.getWikiHaku(laji)
-        .then((returnedData) => {
-          //Ylimääräinen ()!!
-          setWikiData(returnedData);
-          console.log(returnedData);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      console.log(wikiData);
-
+      
       const newWiki = {
         laji: laji,
-        tieteellinenNimi: wikiData?.[0]?.title, //Wiki API
+        tieteellinenNimi: wikiData?.[0]?.title,
         kuvaWikipediastaAPI: wikiData?.[0]?.original?.source,
-        lahko: "", //Wiki API
-        heimo: "", //Wiki API
-        suku: "", //Wiki API
-        elinvoimaisuus: "", //Wiki API
+        lahko: "",
+        heimo: "",
+        suku: "",
+        elinvoimaisuus: "",
       };
 
       LintuService.createLintu(newWiki).then((returnedLintu) => {
@@ -127,27 +128,26 @@ const App = () => {
   const changeHavainto = (id) => {
     const oldHavainto = havaintoList.find((h) => h.id === id);
     console.log(oldHavainto.laji);
-    
-      const updatedHavainto = {
-        laji: oldHavainto.laji,
-        maara: changedmaara,
-        kunta: changedkunta,
-        paikka: changedpaikka,
-        lisatiedot: changedlisatiedot,
-      };
 
-      LintuService.updateHavainto(id, updatedHavainto).then(
-        (returnedHavainto) => {
-          setHavaintoList(
-            havaintoList.map((h) => (h.id !== id ? h : returnedHavainto))
-          );
-          setChangedMaara("");
-          setChangedKunta("");
-          setChangedPaikka("");
-          setChangedLisatiedot("");
-        }
-      );
-    
+    const updatedHavainto = {
+      laji: oldHavainto.laji,
+      maara: changedmaara,
+      kunta: changedkunta,
+      paikka: changedpaikka,
+      lisatiedot: changedlisatiedot,
+    };
+
+    LintuService.updateHavainto(id, updatedHavainto).then(
+      (returnedHavainto) => {
+        setHavaintoList(
+          havaintoList.map((h) => (h.id !== id ? h : returnedHavainto))
+        );
+        setChangedMaara("");
+        setChangedKunta("");
+        setChangedPaikka("");
+        setChangedLisatiedot("");
+      }
+    );
   };
 
   const printHavainto = (havainto) => {
