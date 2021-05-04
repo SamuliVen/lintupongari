@@ -129,7 +129,7 @@ const App = () => {
     console.log(oldHavainto.laji);
     
       const updatedHavainto = {
-        ...oldHavainto,
+        laji: oldHavainto.laji,
         maara: changedmaara,
         kunta: changedkunta,
         paikka: changedpaikka,
