@@ -11,7 +11,7 @@ const Linnut = ({ lintuList }) => {
                                 <h3>Laji: {lintu.laji}</h3>
                                 <p>Tieteellinen nimi: {lintu.tieteellinenNimi}</p>
                                 <img src={lintu.kuvaWikipediastaAPI} className="img" style={{ width: 300 }} alt={lintu.laji} />
-                                <p>Lahko:{lintu.lahko} <br></br>
+                                <p>Lahko: {lintu.lahko} <br></br>
                                     Heimo: {lintu.heimo} <br></br>
                                     Suku: {lintu.suku}</p>
                                 <p>Elinvoimaisuus: {lintu.elinvoimaisuus}</p>

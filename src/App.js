@@ -89,16 +89,27 @@ const App = () => {
     ) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
+      const lahkopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Lahko: ")
+      const lahko = lahkopalat[1].split(" ")
+      const heimopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Heimo: ")
+      const heimo = heimopalat[1].split(" ")
+      const sukupalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Suku: ")
+      const suku = sukupalat[1].split(" ")
+      const luokituspalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Uhanalaisuusluokitus ")
+      const luokitus = luokituspalat[1].split(" ")
+      const tieteellisetpalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Kaksiosainen nimi ")
+      const tieteellinen = tieteellisetpalat[1].split(" ")
       
       const newWiki = {
-        laji: laji,
-        tieteellinenNimi: wikiData?.[0]?.title,
+        laji: wikiData?.[0]?.title,
+        tieteellinenNimi: `${tieteellinen[0]} ${tieteellinen[1]}`,
         kuvaWikipediastaAPI: wikiData?.[0]?.original?.source,
-        lahko: "",
-        heimo: "",
-        suku: "",
-        elinvoimaisuus: "",
+        lahko: `${lahko[0]} ${lahko[1]}`,
+        heimo: `${heimo[0]} ${heimo[1]}`,
+        suku: `${suku[0]} ${suku[1]}`,
+        elinvoimaisuus: luokitus[0],
       };
+      console.log(wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0])
 
       LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
