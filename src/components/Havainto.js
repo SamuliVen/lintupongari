@@ -32,7 +32,7 @@ const Havainto = ({
                 Lisätiedot: {havainto.lisatiedot}
               </p>
               <p>Havainnoija: {havainto.user.username}</p>
-              <Togglable buttonLabel="Muokkaa HAVAINTOA">
+              <Togglable buttonLabel="Muokkaa havaintoa">
                 <div>
                   <h4>Päivitä havainto</h4>
                   <form className="changeForm">
@@ -67,7 +67,7 @@ const Havainto = ({
                     <button
                       type="submit"
                       className="btn"
-                      onClick={() => changeHavainto(havainto)}
+                      onClick={() => changeHavainto(havainto.id)}
                     >
                       Tallenna
                     </button>
@@ -78,7 +78,6 @@ const Havainto = ({
                   </form>
                 </div>
               </Togglable>
-
               <button className="btn" onClick={() => deleteHavainto(havainto)}>
                 Poista havainto
               </button>
