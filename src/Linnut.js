@@ -2,7 +2,7 @@ import React from 'react';
 
 const Linnut = ({ lintuList }) => {
     return (
-        <div>
+        <div className="lintutaulu">
             <h2> Lintutaulu </h2>
             {lintuList.map((lintu, i) => {
                     return (

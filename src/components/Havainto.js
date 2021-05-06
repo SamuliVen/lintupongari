@@ -21,7 +21,7 @@ const Havainto = ({
       <ul>
         {havaintoList.map((havainto) => (
           <li key={havainto.id}>
-            <div id="sighting" className="havainto">
+            <div id={havainto.id} className="havainto">
               <h3>Laji: {havainto.laji}</h3>
               <p> Määrä: {havainto.maara}</p>
               <p>
@@ -84,7 +84,7 @@ const Havainto = ({
               <input
                 type="button"
                 className="btn"
-                onClick={() => printHavainto("sighting")}
+                onClick={() => printHavainto(havainto.id)}
                 value="Tulosta havainto"
               />
             </div>

@@ -1,5 +1,6 @@
 body {
-  background-color: darkgreen;
+  background: url(./images/0deb95780006ded47c0b24ebfd6a09a0.jpeg) no-repeat center center fixed;
+  background-size: cover;
   padding: 20px;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -19,6 +20,7 @@ table {
 }
 
 .Links {
+  
   background-color: slategray;
   font-family: Impact;
   color: darkslategray;
@@ -48,6 +50,9 @@ a:hover, a:active {
 }
 
 .Login-laatikko {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   border: 5px solid firebrick;
   background-color: brown;
   margin-top: 20px;
@@ -55,9 +60,14 @@ a:hover, a:active {
   padding: 20px;
   border-radius: 1em;
 }
-
+.lintutaulu h2 {
+  text-align: center;
+}
 .lintu {
-  background-color: forestgreen;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(34, 139, 34, 0.5);
   width:fit-content;
   padding: 20px;
   margin-bottom: 10px;
@@ -69,8 +79,14 @@ a:hover, a:active {
   vertical-align: middle;
 }
 
+.havainnot h2 {
+  text-align: center;
+}
 .havainto {
-  background-color: forestgreen;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(34, 139, 34, 0.5);
   width: 33%;
   border-radius: 5px;
   border-style: solid;

@@ -162,12 +162,18 @@ const App = () => {
   };
 
   const printHavainto = (havainto) => {
-    // let printContent = document.getElementById(havainto).innerHTML
-    // let originalContent = document.body.innerHTML
-    // document.body.innerHTML = printContent
-    window.print();
-    // document.body.innerHTML = originalContent
-  };
+      var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+      mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<h1>' + document.title  + '</h1>');
+      mywindow.document.write(document.getElementById(havainto).innerHTML);
+      mywindow.document.write('</body></html>');
+      mywindow.document.close();
+      mywindow.focus();
+      mywindow.print();
+  
+      return true;
+  }
 
   const registerForm = () => (
     <Togglable buttonLabel="Register">
