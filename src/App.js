@@ -58,7 +58,7 @@ const App = () => {
 
   // Whenever field changes, the useEffect makes the wiki search. This way it finds the info before submitting.
   // Not the ideal way, because it is done many times depending on the length of the birds name.
-  
+
   useEffect(() => {
     if (!laji) {
       console.log("No data yet");
@@ -89,17 +89,27 @@ const App = () => {
     ) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
-      const lahkopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Lahko: ")
-      const lahko = lahkopalat[1].split(" ")
-      const heimopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Heimo: ")
-      const heimo = heimopalat[1].split(" ")
-      const sukupalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Suku: ")
-      const suku = sukupalat[1].split(" ")
-      const luokituspalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Uhanalaisuusluokitus ")
-      const luokitus = luokituspalat[1].split(" ")
-      const tieteellisetpalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split("Kaksiosainen nimi ")
-      const tieteellinen = tieteellisetpalat[1].split(" ")
-      
+      const lahkopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
+        "Lahko: "
+      );
+      const lahko = lahkopalat[1].split(" ");
+      const heimopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
+        "Heimo: "
+      );
+      const heimo = heimopalat[1].split(" ");
+      const sukupalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
+        "Suku: "
+      );
+      const suku = sukupalat[1].split(" ");
+      const luokituspalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
+        "Uhanalaisuusluokitus "
+      );
+      const luokitus = luokituspalat[1].split(" ");
+      const tieteellisetpalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
+        "Kaksiosainen nimi "
+      );
+      const tieteellinen = tieteellisetpalat[1].split(" ");
+
       const newWiki = {
         laji: wikiData?.[0]?.title,
         tieteellinenNimi: `${tieteellinen[0]} ${tieteellinen[1]}`,
@@ -109,7 +119,7 @@ const App = () => {
         suku: `${suku[0]} ${suku[1]}`,
         elinvoimaisuus: luokitus[0],
       };
-      console.log(wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0])
+      console.log(wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0]);
 
       LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
@@ -162,26 +172,28 @@ const App = () => {
   };
 
   const printHavainto = (havainto) => {
-      var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-      mywindow.document.write('<html><head><title>' + document.title  + '</title>');
-      mywindow.document.write('</head><body >');
-      mywindow.document.write('<h1>' + document.title  + '</h1>');
-      mywindow.document.write(document.getElementById(havainto).innerHTML);
-      mywindow.document.write('</body></html>');
-      mywindow.document.close();
-      mywindow.focus();
-      mywindow.print();
-  
-      return true;
-  }
+    var mywindow = window.open("", "PRINT", "height=400,width=600");
+    mywindow.document.write(
+      "<html><head><title>" + document.title + "</title>"
+    );
+    mywindow.document.write("</head><body >");
+    mywindow.document.write("<h1>" + document.title + "</h1>");
+    mywindow.document.write(document.getElementById(havainto).innerHTML);
+    mywindow.document.write("</body></html>");
+    mywindow.document.close();
+    mywindow.focus();
+    mywindow.print();
+
+    return true;
+  };
 
   const registerForm = () => (
-    <Togglable buttonLabel="Register">
+    <Togglable buttonLabel="Rekisteröidy">
       <div className="Login-laatikko">
-        <h2>Rekisteröidy</h2>
+        <h2>Rekisteröi käyttäjätunnus</h2>
         <form onSubmit={handleNewUser}>
           <label>
-            <p>Username</p>
+            <p>Määritä käyttäjätunnus:</p>
             <input
               type="text"
               value={newUsername}
@@ -189,7 +201,7 @@ const App = () => {
             />
           </label>
           <label>
-            <p>Password</p>
+            <p>Määritä salasana:</p>
             <input
               type="password"
               value={newPassword}
@@ -197,7 +209,11 @@ const App = () => {
             />
           </label>
           <div>
-            <button type="submit">Submit</button>
+            <p>
+              <button className="btn" type="submit">
+                Rekisteröidy
+              </button>
+            </p>
           </div>
         </form>
       </div>
@@ -205,30 +221,35 @@ const App = () => {
   );
 
   const loginForm = () => (
-    <Togglable buttonLabel="Log in">
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button className="btn" type="submit">
-          Login
-        </button>
-      </form>
+    <Togglable buttonLabel="Kirjaudu">
+      <div className="Login-laatikko">
+        <h2>Kirjaudu sisään</h2>
+        <form onSubmit={handleLogin}>
+          <div>
+            <p>Käyttäjätunnus: </p>
+            <input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+          <div>
+            <p>Salasana: </p>
+            <input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+          <p>
+            <button className="btn" type="submit">
+              Kirjaudu
+            </button>
+          </p>
+        </form>
+      </div>
     </Togglable>
   );
 
@@ -253,8 +274,12 @@ const App = () => {
             Lisätiedot:{" "}
             <input value={lisatiedot} onChange={handleTiedotChange} />
           </div>
-          <button type="submit">Tallenna</button>
-          <button type="reset">Tyhjennä</button>
+          <button className="btn" type="submit">
+            Tallenna
+          </button>
+          <button className="btn" type="reset">
+            Tyhjennä
+          </button>
         </form>
       </div>
     </Togglable>
@@ -352,7 +377,6 @@ const App = () => {
       <div>
         <BrowserRouter>
           <div>
-            <h1>Lintupongari</h1>
             <ul className="Links">
               <li>
                 <NavLink to="/havainnot">Havainnot</NavLink>
@@ -360,22 +384,25 @@ const App = () => {
               <li>
                 <NavLink to="/linnut">Linnut</NavLink>
               </li>
+              <h1>Lintupongari</h1>
             </ul>
             <div className="content">
-              {user === null ? (
-                loginForm()
-              ) : (
-                <div>
-                  <p>
-                    {user.username} logged in
-                    <button className="btn" onClick={handleLogout}>
-                      Log out
-                    </button>{" "}
-                  </p>
-                  {lintuForm()}
-                </div>
-              )}
-              <div>{user === null ? registerForm() : <div></div>}</div>
+              <div className="ToggleBox">
+                {user === null ? (
+                  loginForm()
+                ) : (
+                  <div>
+                    <p>
+                      {user.username} logged in
+                      <button className="btn" onClick={handleLogout}>
+                        Log out
+                      </button>{" "}
+                    </p>
+                    {lintuForm()}
+                  </div>
+                )}
+                <div>{user === null ? registerForm() : <div></div>}</div>
+              </div>
               <Route path="/havainnot">
                 <Havainto
                   changeHavainto={changeHavainto}
@@ -399,7 +426,6 @@ const App = () => {
           </div>
         </BrowserRouter>
       </div>
-      <div></div>
     </div>
   );
 };
