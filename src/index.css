@@ -89,10 +89,6 @@ a:active {
   margin-top: 0;
 }
 
-.havainnot {
-  display: block;
-}
-
 .lintutaulu {
   display: block;
   margin-left: 17%;
@@ -119,22 +115,21 @@ a:active {
   height: 225px;
 }
 .havainnot {
-  margin-left: 16%;
-  margin-right: 16%;
+  display: block;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  margin-left: 38.5%;
+  margin-right: 38%;
 }
 .havainnot h2 {
-  display: table;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
 }
 
 .havainto {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
+  display:block;
   background-color: rgba(255, 255, 255, 0.5);
-  width: 380px;
+  width: 300px;
   border-radius: 5px;
   border: 5px solid rgba(46, 85, 57);
   padding-bottom: 40px;
@@ -167,7 +162,4 @@ a:active {
   background-color: rgb(13, 56, 46);
   box-shadow: 0 2px rgb(58, 58, 58);
   transform: translateY(4px);
-}
-
-.lintuform {
 }

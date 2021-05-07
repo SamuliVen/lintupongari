@@ -82,11 +82,9 @@ const App = () => {
       paikka: paikka,
       lisatiedot: lisatiedot,
       user: user.username,
-    };
+    }
 
-    if (
-      lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())
-    ) {
+    if ( lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
       const lahkopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
@@ -119,7 +117,6 @@ const App = () => {
         suku: `${suku[0]} ${suku[1]}`,
         elinvoimaisuus: luokitus[0],
       };
-      console.log(wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0]);
 
       LintuService.createLintu(newWiki).then((returnedLintu) => {
         setLintuList(lintuList.concat(returnedLintu));
