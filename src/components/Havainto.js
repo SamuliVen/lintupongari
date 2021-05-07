@@ -36,34 +36,45 @@ const Havainto = ({
                 <div>
                   <h4>Päivitä havainto</h4>
                   <form className="changeForm">
-                    <div>
-                      Määrä:
-                      <input
-                        value={changedmaara}
-                        onChange={handleUpdateMaaraChange}
-                      />
-                    </div>
-                    <div>
-                      Kunta:
-                      <input
-                        value={changedkunta}
-                        onChange={handleUpdateKuntaChange}
-                      />
-                    </div>
-                    <div>
-                      Paikka:
-                      <input
-                        value={changedpaikka}
-                        onChange={handleUpdatePaikkaChange}
-                      />
-                    </div>
-                    <div>
-                      Lisätiedot:
-                      <input
-                        value={changedlisatiedot}
-                        onChange={handleUpdateTiedotChange}
-                      />
-                    </div>
+                    <table>
+                      <tr>
+                        Määrä:
+                        <td>
+                          <input
+                            value={changedmaara}
+                            onChange={handleUpdateMaaraChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        Kunta:
+                        <td>
+                          <input
+                            value={changedkunta}
+                            onChange={handleUpdateKuntaChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        Paikka:
+                        <td>
+                          <input
+                            value={changedpaikka}
+                            onChange={handleUpdatePaikkaChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        Lisätiedot:
+                        <td>
+                          <input
+                            value={changedlisatiedot}
+                            onChange={handleUpdateTiedotChange}
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                    <br></br>
                     <button
                       type="submit"
                       className="btn"
@@ -71,13 +82,14 @@ const Havainto = ({
                     >
                       Tallenna
                     </button>
-
                     <button type="reset" className="btn">
                       Tyhjennä
                     </button>
                   </form>
                 </div>
               </Togglable>
+              <br></br>
+              <br></br>
               <button className="btn" onClick={() => deleteHavainto(havainto)}>
                 Poista havainto
               </button>

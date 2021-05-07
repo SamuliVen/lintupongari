@@ -1,51 +1,50 @@
 body {
-  background: url(./images/0deb95780006ded47c0b24ebfd6a09a0.jpeg) no-repeat center center fixed;
+  background: url(./images/0deb95780006ded47c0b24ebfd6a09a0.jpeg) no-repeat
+    center center fixed;
   background-size: cover;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-table {
-  border: 2px solid black;
-}
-
 .content {
-  display: grid;
+  display: block;
 }
 
 .Links {
-  background-color: rgba(0, 0, 0,0.9);
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: rgba(0, 0, 0, 0.9);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   list-style-type: none;
-  margin: 0;
-  width: 100% - 20px;
-  padding: 20px;
-  display:flex;
+  margin-top: 0;
+  width: 100%-30px;
+  padding: 30px;
+  display: flex;
   text-decoration: none;
 }
 .Links h1 {
-  border: 2px solid white;
-  width: 100%;
-  font-family:Georgia, 'Times New Roman', Times, serif;
-  color:whitesmoke;
-  
+  position: absolute;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: whitesmoke;
 }
 
 ul {
   list-style-type: none;
 }
 
-a:link, a:visited {
-  margin-top: 15px;
+a:link,
+a:visited {
   border: 2px solid rgb(13, 56, 46);
   background-color: rgb(46, 85, 57);
   color: white;
@@ -55,15 +54,15 @@ a:link, a:visited {
   display: inline-block;
 }
 
-a:hover, a:active {
-  background-color: rgb(79, 117, 87); ;
+a:hover,
+a:active {
+  background-color: rgb(79, 117, 87);
 }
 
 .ToggleBox {
-  float:left;
-  border: 2px solid black;
-  
-  margin:10px;
+  float: left;
+  width: 200px;
+  margin-left: 20px;
 }
 
 .Login-laatikko {
@@ -71,29 +70,41 @@ a:hover, a:active {
   color: #fff;
   border: 5px solid rgba(46, 85, 57);
   background-color: rgba(41, 80, 52, 0.8);
-  margin-top: 40px;
-  width:300px;
+  margin-bottom: 30px;
+  width: 200px;
   padding: 20px;
   border-radius: 1em;
   padding-bottom: 40px;
 }
 
+.newSighting {
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 180px;
+  padding: 20px;
+  padding-top: 0;
+  padding-bottom: 40px;
+  margin-bottom: 20px;
+  border: 5px solid rgba(46, 85, 57);
+  border-radius: 5px;
+  margin-top: 0;
+}
+
 .havainnot {
-  display:block;
+  display: block;
 }
 
 .lintutaulu {
-  display:block;
-  margin-left: 25%;
-  margin-right: 25%;
+  display: block;
+  margin-left: 17%;
+  margin-right: 17%;
 }
 .lintutaulu h2 {
   text-align: center;
 }
-.lintu { 
-  float:left;
+.lintu {
+  float: left;
   background-color: rgba(255, 255, 255, 0.5);
-  width:fit-content;
+  width: fit-content;
   padding: 20px;
   margin-bottom: 10px;
   border: 5px solid rgba(46, 85, 57);
@@ -103,26 +114,25 @@ a:hover, a:active {
 }
 
 .img {
-  border: 3px solid black;
+  border: 3px solid rgb(48, 48, 48);
   width: 300px;
   height: 225px;
 }
-
+.havainnot {
+  margin-left: 16%;
+  margin-right: 16%;
+}
 .havainnot h2 {
-  border: 2px solid black;
   display: table;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
 }
 
-.havainnot {
-  border: 2px solid black;
-}
 .havainto {
   display: block;
-  margin-left: auto;
   margin-right: auto;
+  margin-left: auto;
   background-color: rgba(255, 255, 255, 0.5);
   width: 380px;
   border-radius: 5px;
@@ -130,14 +140,12 @@ a:hover, a:active {
   padding-bottom: 40px;
   padding-left: 10px;
   margin-bottom: 10px;
-  
-
 }
 
 .btn {
   float: left;
   margin-right: 10px;
-  display:block;
+  display: block;
   padding: 7px 12px;
   font-size: 12px;
   cursor: pointer;
@@ -151,7 +159,9 @@ a:hover, a:active {
   box-shadow: 0 4px rgb(58, 58, 58);
 }
 
-.btn:hover {background-color: rgb(13, 56, 46)}
+.btn:hover {
+  background-color: rgb(13, 56, 46);
+}
 
 .btn:active {
   background-color: rgb(13, 56, 46);
@@ -160,5 +170,4 @@ a:hover, a:active {
 }
 
 .lintuform {
-  
 }

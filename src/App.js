@@ -221,41 +221,38 @@ const App = () => {
   );
 
   const loginForm = () => (
-    <Togglable buttonLabel="Kirjaudu">
-      <div className="Login-laatikko">
-        <h2>Kirjaudu sisään</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            <p>Käyttäjätunnus: </p>
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            <p>Salasana: </p>
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <p>
-            <button className="btn" type="submit">
-              Kirjaudu
-            </button>
-          </p>
-        </form>
-      </div>
-    </Togglable>
+    <div className="Login-laatikko">
+      <h2>Kirjaudu sisään</h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          <p>Käyttäjätunnus: </p>
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          <p>Salasana: </p>
+          <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <p>
+          <button className="btn" type="submit">
+            Kirjaudu
+          </button>
+        </p>
+      </form>
+    </div>
   );
 
   const lintuForm = () => (
-    <Togglable buttonLabel="Lisää uusi havainto">
-      <div>
+      <div className="newSighting">
         <h4>Lisää uusi havainto:</h4>
         <form onSubmit={addHavainto} className="lintuform">
           <div>
@@ -274,6 +271,7 @@ const App = () => {
             Lisätiedot:{" "}
             <input value={lisatiedot} onChange={handleTiedotChange} />
           </div>
+          <br></br>
           <button className="btn" type="submit">
             Tallenna
           </button>
@@ -282,7 +280,6 @@ const App = () => {
           </button>
         </form>
       </div>
-    </Togglable>
   );
 
   const handleLajiChange = (event) => {
@@ -392,12 +389,15 @@ const App = () => {
                   loginForm()
                 ) : (
                   <div>
-                    <p>
-                      {user.username} logged in
+                    <p className="newSighting">
+                      Logged in as: <br/> {user.username}
+                      <br/>
+                      <br/>
                       <button className="btn" onClick={handleLogout}>
                         Log out
                       </button>{" "}
                     </p>
+                    <br/>
                     {lintuForm()}
                   </div>
                 )}
