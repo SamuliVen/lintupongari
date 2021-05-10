@@ -31,6 +31,7 @@ code {
   text-decoration: none;
 }
 .Links h1 {
+  display: inline-block;
   position: absolute;
   left: 50%;
   margin-right: -50%;
@@ -51,18 +52,21 @@ a:visited {
   padding: 14px 25px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: block;
 }
 
 a:hover,
 a:active {
   background-color: rgb(79, 117, 87);
+  display: block;
 }
 
 .ToggleBox {
+  display: block;
   float: left;
   width: 200px;
   margin-left: 20px;
+  margin-right: 40px;
 }
 
 .Login-laatikko {
@@ -78,6 +82,7 @@ a:active {
 }
 
 .newSighting {
+  display: block;
   background-color: rgba(255, 255, 255, 0.5);
   width: 180px;
   padding: 20px;
@@ -91,8 +96,8 @@ a:active {
 
 .lintutaulu {
   display: block;
-  margin-left: 17%;
-  margin-right: 17%;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 .lintutaulu h2 {
   text-align: center;
@@ -116,18 +121,16 @@ a:active {
 }
 .havainnot {
   display: block;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  margin-left: 38.5%;
-  margin-right: 38%;
+  width: 360px;
+  margin: auto;
 }
 .havainnot h2 {
-  margin-right: auto;
-  margin-left: auto;
+  display: block;
   text-align: center;
 }
 
 .havainto {
-  display:block;
+  display: block;
   background-color: rgba(255, 255, 255, 0.5);
   width: 300px;
   border-radius: 5px;
@@ -135,6 +138,7 @@ a:active {
   padding-bottom: 40px;
   padding-left: 10px;
   margin-bottom: 10px;
+  margin-left: -20px;
 }
 
 .btn {
