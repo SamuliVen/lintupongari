@@ -96,7 +96,6 @@ a:active {
 
 .lintutaulu {
   display: grid;
-  border: 2px solid black;
   grid-template-columns: repeat(auto-fit, 365px);
 }
 .lintuOtsikko {
