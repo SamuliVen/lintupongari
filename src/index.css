@@ -99,7 +99,6 @@ a:active {
 
 .lintutaulu {
   margin: auto;
-  border: 2px solid black;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
