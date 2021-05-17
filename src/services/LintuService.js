@@ -5,7 +5,6 @@ const lintuUrl = "/api/lintudb/lintu";
 const userUrl = "/api/lintudb/user";
 const wikiUrl = "/api/wiki?haku=";
 
-
 let token = null;
 
 const setToken = (newToken) => {
@@ -13,9 +12,9 @@ const setToken = (newToken) => {
 };
 
 const getWikiHaku = async (haku) => {
-  const response = await axios.get(wikiUrl + haku)
-  return response.data
-}
+  const response = await axios.get(wikiUrl + haku);
+  return response.data;
+};
 
 const getAll = () => {
   const request = axios.get(baseUrl);
@@ -77,5 +76,5 @@ export default {
   updateHavainto,
   removeHavainto,
   setToken,
-  getWikiHaku
+  getWikiHaku,
 };

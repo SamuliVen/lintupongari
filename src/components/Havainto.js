@@ -2,6 +2,7 @@ import React from "react";
 import Togglable from "./Togglable";
 
 const Havainto = ({
+  user,
   changeHavainto,
   havaintoList,
   deleteHavainto,
@@ -15,6 +16,15 @@ const Havainto = ({
   changedlisatiedot,
   handleUpdateTiedotChange,
 }) => {
+  const formInput = ({ subject, value, onChange }) => (
+    <tr>
+      <td>{subject}</td>
+      <td>
+        <input value={value} onChange={onChange} />
+      </td>
+    </tr>
+  );
+
   return (
     <div className="havainnot">
       <h2> Havainnot </h2>
@@ -32,73 +42,71 @@ const Havainto = ({
                 Lisätiedot: {havainto.lisatiedot}
               </p>
               <p>Havainnoija: {havainto.user.username}</p>
-              <Togglable buttonLabel="Muokkaa havaintoa">
-                <div>
-                  <h4>Päivitä havainto</h4>
-                  <form className="changeForm">
-                    <table>
-                      <tr>
-                        Määrä:
-                        <td>
-                          <input
-                            value={changedmaara}
-                            onChange={handleUpdateMaaraChange}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        Kunta:
-                        <td>
-                          <input
-                            value={changedkunta}
-                            onChange={handleUpdateKuntaChange}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        Paikka:
-                        <td>
-                          <input
-                            value={changedpaikka}
-                            onChange={handleUpdatePaikkaChange}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        Lisätiedot:
-                        <td>
-                          <input
-                            value={changedlisatiedot}
-                            onChange={handleUpdateTiedotChange}
-                          />
-                        </td>
-                      </tr>
-                    </table>
+              <div>
+                {" "}
+                {user !== null ? (
+                  <div>
+                    <Togglable buttonLabel="Muokkaa havaintoa">
+                      <div>
+                        <h4>Päivitä havainto</h4>
+                        <form className="changeForm">
+                          <table>
+                            <tbody>
+                              {formInput({
+                                subject: "Määrä:",
+                                changedmaara,
+                                handleUpdateMaaraChange,
+                              })}
+                              {formInput({
+                                subject: "Kunta:",
+                                changedkunta,
+                                handleUpdateKuntaChange,
+                              })}
+                              {formInput({
+                                subject: "Paika:",
+                                changedpaikka,
+                                handleUpdatePaikkaChange,
+                              })}
+                              {formInput({
+                                subject: "Lisätiedot:",
+                                changedlisatiedot,
+                                handleUpdateTiedotChange,
+                              })}
+                            </tbody>
+                          </table>
+                          <br></br>
+                          <button
+                            type="submit"
+                            className="btn"
+                            onClick={() => changeHavainto(havainto.id)}
+                          >
+                            Tallenna
+                          </button>
+                          <button type="reset" className="btn">
+                            Tyhjennä
+                          </button>
+                        </form>
+                      </div>
+                    </Togglable>
+                    <br></br>
                     <br></br>
                     <button
-                      type="submit"
                       className="btn"
-                      onClick={() => changeHavainto(havainto.id)}
+                      onClick={() => deleteHavainto(havainto)}
                     >
-                      Tallenna
+                      Poista havainto
                     </button>
-                    <button type="reset" className="btn">
-                      Tyhjennä
-                    </button>
-                  </form>
-                </div>
-              </Togglable>
-              <br></br>
-              <br></br>
-              <button className="btn" onClick={() => deleteHavainto(havainto)}>
-                Poista havainto
-              </button>
-              <input
-                type="button"
-                className="btn"
-                onClick={() => printHavainto(havainto.id)}
-                value="Tulosta havainto"
-              />
+                    <input
+                      type="button"
+                      className="btn"
+                      onClick={() => printHavainto(havainto.id)}
+                      value="Tulosta havainto"
+                    />{" "}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
             </div>
           </li>
         ))}

@@ -4,7 +4,7 @@ import LintuService from "./services/LintuService";
 import Havainto from "./components/Havainto";
 import loginService from "./services/login";
 import Togglable from "./components/Togglable";
-import Linnut from "./Linnut";
+import Linnut from "./components/Linnut";
 import "./index.css";
 
 const App = () => {
@@ -68,6 +68,7 @@ const App = () => {
           setWikiData(returnedData);
         })
         .catch((error) => {
+          alert(error);
           console.log(error);
         });
     }
@@ -82,30 +83,25 @@ const App = () => {
       paikka: paikka,
       lisatiedot: lisatiedot,
       user: user.username,
-    }
+    };
 
-    if ( lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())) {
+    if (
+      lintuList.some((lintu) => lintu.laji.toLowerCase() === laji.toLowerCase())
+    ) {
       window.alert(laji + " on jo lintutaulussa.");
     } else {
-      const lahkopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
-        "Lahko: "
-      );
+      const taxonomyData =
+        wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0];
+
+      const lahkopalat = taxonomyData.split("Lahko: ");
       const lahko = lahkopalat[1].split(" ");
-      const heimopalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
-        "Heimo: "
-      );
+      const heimopalat = taxonomyData.split("Heimo: ");
       const heimo = heimopalat[1].split(" ");
-      const sukupalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
-        "Suku: "
-      );
+      const sukupalat = taxonomyData.split("Suku: ");
       const suku = sukupalat[1].split(" ");
-      const luokituspalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
-        "Uhanalaisuusluokitus "
-      );
+      const luokituspalat = taxonomyData.split("Uhanalaisuusluokitus ");
       const luokitus = luokituspalat[1].split(" ");
-      const tieteellisetpalat = wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0].split(
-        "Kaksiosainen nimi "
-      );
+      const tieteellisetpalat = taxonomyData.split("Kaksiosainen nimi ");
       const tieteellinen = tieteellisetpalat[1].split(" ");
 
       const newWiki = {
@@ -186,7 +182,7 @@ const App = () => {
 
   const registerForm = () => (
     <Togglable buttonLabel="Rekisteröidy">
-      <div className="Login-laatikko">
+      <div className="loginLaatikko">
         <h2>Rekisteröi käyttäjätunnus</h2>
         <form onSubmit={handleNewUser}>
           <label>
@@ -218,7 +214,7 @@ const App = () => {
   );
 
   const loginForm = () => (
-    <div className="Login-laatikko">
+    <div className="loginLaatikko">
       <h2>Kirjaudu sisään</h2>
       <form onSubmit={handleLogin}>
         <div>
@@ -249,34 +245,33 @@ const App = () => {
   );
 
   const lintuForm = () => (
-      <div className="newSighting">
-        <h4>Lisää uusi havainto:</h4>
-        <form onSubmit={addHavainto} className="lintuform">
-          <div>
-            Laji: <input value={laji} onChange={handleLajiChange} />
-          </div>
-          <div>
-            Määrä: <input value={maara} onChange={handleMaaraChange} />
-          </div>
-          <div>
-            Kunta: <input value={kunta} onChange={handleKuntaChange} />
-          </div>
-          <div>
-            Paikka: <input value={paikka} onChange={handlePaikkaChange} />
-          </div>
-          <div>
-            Lisätiedot:{" "}
-            <input value={lisatiedot} onChange={handleTiedotChange} />
-          </div>
-          <br></br>
-          <button className="btn" type="submit">
-            Tallenna
-          </button>
-          <button className="btn" type="reset">
-            Tyhjennä
-          </button>
-        </form>
-      </div>
+    <div className="newSighting">
+      <h4>Lisää uusi havainto:</h4>
+      <form onSubmit={addHavainto} className="lintuform">
+        <div>
+          Laji: <input value={laji} onChange={handleLajiChange} />
+        </div>
+        <div>
+          Määrä: <input value={maara} onChange={handleMaaraChange} />
+        </div>
+        <div>
+          Kunta: <input value={kunta} onChange={handleKuntaChange} />
+        </div>
+        <div>
+          Paikka: <input value={paikka} onChange={handlePaikkaChange} />
+        </div>
+        <div>
+          Lisätiedot: <input value={lisatiedot} onChange={handleTiedotChange} />
+        </div>
+        <br></br>
+        <button className="btn" type="submit">
+          Tallenna
+        </button>
+        <button className="btn" type="reset">
+          Tyhjennä
+        </button>
+      </form>
+    </div>
   );
 
   const handleLajiChange = (event) => {
@@ -371,7 +366,7 @@ const App = () => {
       <div>
         <BrowserRouter>
           <div>
-            <ul className="Links">
+            <ul className="links">
               <li>
                 <NavLink to="/havainnot">Havainnot</NavLink>
               </li>
@@ -381,20 +376,20 @@ const App = () => {
               <h1>Lintupongari</h1>
             </ul>
             <div className="content">
-              <div className="ToggleBox">
+              <div className="toggleBox">
                 {user === null ? (
                   loginForm()
                 ) : (
                   <div>
                     <p className="newSighting">
-                      Logged in as: <br/> {user.username}
-                      <br/>
-                      <br/>
+                      Logged in as: <br /> {user.username}
+                      <br />
+                      <br />
                       <button className="btn" onClick={handleLogout}>
                         Log out
                       </button>{" "}
                     </p>
-                    <br/>
+                    <br />
                     {lintuForm()}
                   </div>
                 )}
@@ -402,6 +397,7 @@ const App = () => {
               </div>
               <Route path="/havainnot">
                 <Havainto
+                  user={user}
                   changeHavainto={changeHavainto}
                   havaintoList={havaintoList}
                   deleteHavainto={deleteHavainto}
@@ -417,6 +413,7 @@ const App = () => {
                 />
               </Route>
               <Route path="/linnut">
+                <h2 className="lintuOtsikko"> Lintutaulu </h2>
                 <Linnut lintuList={lintuList} />
               </Route>
             </div>

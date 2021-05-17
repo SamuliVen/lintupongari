@@ -1,4 +1,12 @@
 body {
+  /* This is the CSS for body */
+  position: relative;
+  min-width: 900px;
+  /*overflow: hidden;  Overflow set to hidden. Any elements outside of the window will not be shown */
+  height: 100%; /* Height set to 100% means the body will extend from the top of the window to the bottom */
+  max-height: 100%; /* Maximum height is limited to 100% */
+  line-height: 1.5em; /* Line spacing is set to 1.5em */
+
   background: url(./images/0deb95780006ded47c0b24ebfd6a09a0.jpeg) no-repeat
     center center fixed;
   background-size: cover;
@@ -15,11 +23,11 @@ code {
     monospace;
 }
 
-.content {
-  display: block;
+table td tr {
+  border: 10px solid black;
 }
 
-.Links {
+.links {
   background-color: rgba(0, 0, 0, 0.9);
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -30,8 +38,7 @@ code {
   display: flex;
   text-decoration: none;
 }
-.Links h1 {
-  display: inline-block;
+.links h1 {
   position: absolute;
   left: 50%;
   margin-right: -50%;
@@ -58,19 +65,16 @@ a:visited {
 a:hover,
 a:active {
   background-color: rgb(79, 117, 87);
-  display: block;
 }
 
-.ToggleBox {
-  display: block;
+.toggleBox {
   float: left;
   width: 200px;
   margin-left: 20px;
   margin-right: 40px;
 }
 
-.Login-laatikko {
-  display: block;
+.loginLaatikko {
   color: #fff;
   border: 5px solid rgba(46, 85, 57);
   background-color: rgba(41, 80, 52, 0.8);
@@ -82,7 +86,6 @@ a:active {
 }
 
 .newSighting {
-  display: block;
   background-color: rgba(255, 255, 255, 0.5);
   width: 180px;
   padding: 20px;
@@ -95,15 +98,22 @@ a:active {
 }
 
 .lintutaulu {
-  display: block;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin: auto;
+  border: 2px solid black;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  grid-auto-rows: auto;
+  grid-auto-flow: dense;
+  grid-template-areas: ". a .";
 }
-.lintutaulu h2 {
+.lintuOtsikko {
   text-align: center;
 }
 .lintu {
-  float: left;
+  grid-area: a;
+  align-self: center;
+  justify-self: center;
   background-color: rgba(255, 255, 255, 0.5);
   width: fit-content;
   padding: 20px;
@@ -120,17 +130,14 @@ a:active {
   height: 225px;
 }
 .havainnot {
-  display: block;
   width: 360px;
   margin: auto;
 }
 .havainnot h2 {
-  display: block;
   text-align: center;
 }
 
 .havainto {
-  display: block;
   background-color: rgba(255, 255, 255, 0.5);
   width: 300px;
   border-radius: 5px;
@@ -144,7 +151,7 @@ a:active {
 .btn {
   float: left;
   margin-right: 10px;
-  display: block;
+
   padding: 7px 12px;
   font-size: 12px;
   cursor: pointer;
