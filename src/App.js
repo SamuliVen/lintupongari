@@ -189,14 +189,17 @@ const App = () => {
             <p>Määritä käyttäjätunnus:</p>
             <input
               type="text"
+              size="15"
               value={newUsername}
               onChange={handleNewUsernameChange}
+              
             />
           </label>
           <label>
             <p>Määritä salasana:</p>
             <input
               type="password"
+              size="15"
               value={newPassword}
               onChange={handleNewPasswordChange}
             />
@@ -221,6 +224,7 @@ const App = () => {
           <p>Käyttäjätunnus: </p>
           <input
             type="text"
+            size="15"
             value={username}
             name="Username"
             onChange={({ target }) => setUsername(target.value)}
@@ -230,6 +234,7 @@ const App = () => {
           <p>Salasana: </p>
           <input
             type="password"
+            size="15"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
