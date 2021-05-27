@@ -121,8 +121,9 @@ a:active {
   height: 225px;
 }
 .havainnot {
-  width: 360px;
-  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 365px);
+  margin-top: 0;
 }
 .havainnot h2 {
   text-align: center;
@@ -136,7 +137,8 @@ a:active {
   padding-bottom: 40px;
   padding-left: 10px;
   margin-bottom: 10px;
-  margin-left: -20px;
+  margin-left: 10px;
+  margin-top: 60px;
 }
 
 .btn {
