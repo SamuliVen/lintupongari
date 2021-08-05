@@ -94,39 +94,51 @@ const App = () => {
         wikiData?.[0]?.cirrusdoc?.[0].source?.auxiliary_text[0];
       if (taxonomyData !== undefined) {
         const lahkopalat = taxonomyData.split("Lahko: ");
-        if (lahkopalat === undefined) {
+        if (lahkopalat !== undefined) {
           const lahko = lahkopalat[1].split(" ");
+          if (lahko[0].includes("linnut")) {
           const heimopalat = taxonomyData.split("Heimo: ");
           const heimo = heimopalat[1].split(" ");
           const sukupalat = taxonomyData.split("Suku: ");
           const suku = sukupalat[1].split(" ");
           const luokituspalat = taxonomyData.split("Uhanalaisuusluokitus ");
-          const luokitus = luokituspalat[1].split(" ");
-          const tieteellisetpalat = taxonomyData.split("Kaksiosainen nimi ");
-          const tieteellinen = tieteellisetpalat[1].split(" ");
+          if (taxonomyData.includes("Uhanalaisuusluokitus")) {
+            const luokitus = luokituspalat[1].split(" ");
+            const tieteellisetpalat = taxonomyData.split("Kaksiosainen nimi ");
+            const tieteellinen = tieteellisetpalat[1].split(" ");
 
-          const newWiki = {
-            laji: wikiData?.[0]?.title,
-            tieteellinenNimi: `${tieteellinen[0]} ${tieteellinen[1]}`,
-            kuvaWikipediastaAPI: wikiData?.[0]?.original?.source,
-            lahko: `${lahko[0]} ${lahko[1]}`,
-            heimo: `${heimo[0]} ${heimo[1]}`,
-            suku: `${suku[0]} ${suku[1]}`,
-            elinvoimaisuus: luokitus[0],
-          };
-          LintuService.createLintu(newWiki).then((returnedLintu) => {
-            setLintuList(lintuList.concat(returnedLintu));
-            setWikiData("");
-            console.log(lintuList);
-          });
+            const newWiki = {
+              laji: wikiData?.[0]?.title,
+              tieteellinenNimi: `${tieteellinen[0]} ${tieteellinen[1]}`,
+              kuvaWikipediastaAPI: wikiData?.[0]?.original?.source,
+              lahko: `${lahko[0]} ${lahko[1]}`,
+              heimo: `${heimo[0]} ${heimo[1]}`,
+              suku: `${suku[0]} ${suku[1]}`,
+              elinvoimaisuus: luokitus[0],
+            };
+            LintuService.createLintu(newWiki).then((returnedLintu) => {
+              setLintuList(lintuList.concat(returnedLintu));
+              setWikiData("");
+              console.log(lintuList);
+            });
+          } else {
+            window.alert(
+              laji +
+                "-lajista ei saatu täydellistä lintukorttia luotua. Luodaan silti havainto."
+            );
+          }
         } else {
-          window.alert( laji + "-niminen lintu ei ollut tarpeeksi spesifioitu. Lisätään silti havainto." )
+          window.alert(
+              "Laji ei vaikuttaisi olevan lintu.")
+        }
+        } else {
+          window.alert(
+            laji +
+              "-lajista ei saatu täydellistä lintukorttia luotua. Luodaan silti havainto."
+          );
         }
       } else {
-        window.alert(
-          laji + "-virheellinen laji."
-            
-        );
+        window.alert(laji + "-virheellinen laji.");
       }
     }
 
@@ -157,8 +169,10 @@ const App = () => {
       maara: changedmaara,
       kunta: changedkunta,
       paikka: changedpaikka,
-      lisatiedot: changedlisatiedot,
+      lisatiedot: changedlisatiedot
     };
+
+    console.log(`${changedmaara}, ${changedkunta}, ${changedpaikka}, ${changedlisatiedot}`)
 
     LintuService.updateHavainto(id, updatedHavainto).then(
       (returnedHavainto) => {
