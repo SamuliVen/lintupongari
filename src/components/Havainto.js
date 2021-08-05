@@ -63,7 +63,7 @@ const Havainto = ({
                                   handleUpdateKuntaChange,
                                 })}
                                 {formInput({
-                                  subject: "Paika:",
+                                  subject: "Paikka:",
                                   changedpaikka,
                                   handleUpdatePaikkaChange,
                                 })}
